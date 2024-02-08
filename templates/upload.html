@@ -1,0 +1,40 @@
+<!doctype html>
+<title>MP3 to Midi Transcripton Example</title>
+<h2>Select a mp3 file to upload</h2>
+<p>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+<ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+</p>
+{% if filename %}
+<p>MP3 File:</p>
+<div>
+    <audio controls="controls">
+        <source src="{{ url_for('display_mp3', filename=filename) }}" type="audio/mpeg" />
+        Your browser does not support the audio element.
+    </audio>
+</div>
+<p>Transcripted MIDI File:</p>
+<div>
+    <audio controls="controls">
+        <source src="{{ url_for('display_midi', filename=midiname) }}" type="audio/mpeg" />
+        Your browser does not support the audio element.
+    </audio>
+</div>
+{% endif %}
+<form method="post" action="/transcript/" enctype="multipart/form-data">
+    <dl>
+        <p>
+            <input type="file" name="file" autocomplete="off" required>
+        </p>
+    </dl>
+    <p>
+        <input type="submit" value="Submit">
+    </p>
+</form>
