@@ -50,7 +50,7 @@ def upload_transcription():
         # Implement Inference
         output_midi_path = os.path.join(
             os.getcwd(), app.config['STORE_FOLDER'], filename.replace('.mp3', '.mid'))
-        print('audio File Path: ' + filepath)
+        print('Audio File Path: ' + filepath)
         print('MIDI File Path: ' + output_midi_path)
         flash('Start transcribing...')
         inference(audio_path=filepath, output_midi_path=output_midi_path)
