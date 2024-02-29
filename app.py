@@ -7,10 +7,9 @@ from flask import Flask
 
 app = Flask(__name__)
 app.secret_key = "secret key"
-app.config['UPLOAD_FOLDER'] = 'static/mp3/'
+app.config['UPLOAD_FOLDER'] = 'static/audio/'
 app.config['STORE_FOLDER'] = 'static/midi/'
 
-# ALLOWED_EXTENSIONS = set(['mp3', 'mid', 'mp4'])
 ALLOWED_EXTENSIONS = set(['mp3'])
 
 
@@ -24,21 +23,21 @@ def wrapper(func):
     return inner
 
 
-@app.route('/', methods=['GET'],  endpoint='upload_mp3')
+@app.route('/', methods=['GET'],  endpoint='upload_audio')
 @wrapper
-def upload_mp3():
+def upload_audio():
     return render_template('upload.html')
 
 
-@app.route('/transcript/', methods=['GET', 'POST'], endpoint='upload_transcript')
+@app.route('/transcription/', methods=['GET', 'POST'], endpoint='upload_transcription')
 @wrapper
-def upload_transcript():
+def upload_transcription():
     if 'file' not in request.files:
-        flash('No MP3 file part.')
+        flash('No audio file part.')
         return redirect(request.url)
     file = request.files['file']
     if file.filename == '':
-        flash('No a mp3 file selected for uploading.')
+        flash('No audio file was selected.')
         return redirect(request.url)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
@@ -46,24 +45,24 @@ def upload_transcript():
             os.getcwd(), app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
         print('upload_image filename: ' + filename)
-        flash('The MP3 file is successfully uploaded and displayed below.')
+        flash('The audio file is successfully uploaded.')
 
         # Implement Inference
         output_midi_path = os.path.join(
             os.getcwd(), app.config['STORE_FOLDER'], filename.replace('.mp3', '.mid'))
-        print('MP3 File Path: ' + filepath)
+        print('audio File Path: ' + filepath)
         print('MIDI File Path: ' + output_midi_path)
-        flash('Start transcripting...')
+        flash('Start transcribing...')
         inference(audio_path=filepath, output_midi_path=output_midi_path)
         flash('Transcription completed.')
-        return render_template('upload.html', filename=filename, midiname=filename.replace('.mp3', '.mid'))
+        return render_template('upload.html', filename=filename, midiname=filename.replace('.audio', '.mid'))
 
 
-@app.route('/mp3/<filename>/', methods=['GET'], endpoint='display_mp3')
+@app.route('/audio/<filename>/', methods=['GET'], endpoint='display_audio')
 @wrapper
-def display_mp3(filename):
-    # print('display_mp3: ' + filename)
-    return redirect(url_for('static', filename='mp3/' + filename), code=301)
+def display_audio(filename):
+    # print('display_audio: ' + filename)
+    return redirect(url_for('static', filename='audio/' + filename), code=301)
 
 
 @app.route('/midi/<filename>/', methods=['GET'], endpoint='display_midi')
@@ -100,7 +99,4 @@ def inference(audio_path, output_midi_path):
 
 
 if __name__ == "__main__":
-    # 调试本应用时
-    # app.run()
-    # 运行本程序时，需要指定 IP 地址
     app.run(debug=False, host='0.0.0.0', port=9075)
