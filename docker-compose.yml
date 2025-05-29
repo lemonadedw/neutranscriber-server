@@ -1,0 +1,28 @@
+services:
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+
+  neutranscriptorserver:
+    image: neutranscriptorserver
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: gunicorn --bind 0.0.0.0:9000 app:app
+    volumes:
+      - .:/app
+      - ./static:/app/static  # Explicit mapping for static files
+    ports:
+      - "9000:9000"
+    depends_on:
+      - redis
+
+  worker:
+    build: .
+    command: celery -A celery_worker.celery worker --loglevel=info
+    volumes:
+      - .:/app
+      - ./static:/app/static  # Explicit mapping for static files
+    depends_on:
+      - redis

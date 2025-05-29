@@ -1,102 +1,88 @@
-from pinference import PianoTranscription, sample_rate, load_audio
-from werkzeug.utils import secure_filename
-from flask import Flask, flash, request, redirect, url_for, render_template
-import time
 import os
-from flask import Flask
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from werkzeug.utils import secure_filename
+from celery.result import AsyncResult
+from celery_worker import transcribe_audio_task
 
 app = Flask(__name__)
-app.secret_key = "secret key"
+CORS(app)  # Enable CORS for all routes
 app.config['UPLOAD_FOLDER'] = 'static/audio/'
 app.config['STORE_FOLDER'] = 'static/midi/'
+ALLOWED_EXTENSIONS = {'mp3'}
 
-ALLOWED_EXTENSIONS = set(['mp3'])
+# Ensure the upload and storage directories exist
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
+if not os.path.exists(app.config['STORE_FOLDER']):
+    os.makedirs(app.config['STORE_FOLDER'])
 
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def wrapper(func):
-    def inner(*args, **kwargs):
-        return func(*args, **kwargs)
-    return inner
-
-
-@app.route('/', methods=['GET'],  endpoint='upload_audio')
-@wrapper
-def upload_audio():
-    return render_template('upload.html')
-
-
-@app.route('/transcription/', methods=['GET', 'POST'], endpoint='upload_transcription')
-@wrapper
-def upload_transcription():
+@app.route('/api/transcribe', methods=['POST'])
+def upload_and_transcribe():
+    """
+    API endpoint to upload an MP3 file and start the transcription process.
+    """
     if 'file' not in request.files:
-        flash('No audio file part.')
-        return redirect(request.url)
+        return jsonify({'error': 'No file part in the request'}), 400
     file = request.files['file']
     if file.filename == '':
-        flash('No audio file was selected.')
-        return redirect(request.url)
+        return jsonify({'error': 'No selected file'}), 400
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        filepath = os.path.join(
-            os.getcwd(), app.config['UPLOAD_FOLDER'], filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
-        print('upload_image filename: ' + filename)
-        flash('The audio file is successfully uploaded.')
 
-        # Implement Inference
-        output_midi_path = os.path.join(
-            os.getcwd(), app.config['STORE_FOLDER'], filename.replace('.mp3', '.mid'))
-        print('Audio File Path: ' + filepath)
-        print('MIDI File Path: ' + output_midi_path)
-        flash('Start transcribing...')
-        inference(audio_path=filepath, output_midi_path=output_midi_path)
-        flash('Transcription completed.')
-        return render_template('upload.html', filename=filename, midiname=filename.replace('.audio', '.mid'))
+        # Start the background task
+        task = transcribe_audio_task.delay(filepath)
+
+        # Return the task ID to the client
+        return jsonify({'task_id': task.id}), 202
+    else:
+        return jsonify({'error': 'File type not allowed'}), 400
 
 
-@app.route('/audio/<filename>/', methods=['GET'], endpoint='display_audio')
-@wrapper
-def display_audio(filename):
-    # print('display_audio: ' + filename)
-    return redirect(url_for('static', filename='audio/' + filename), code=301)
-
-
-@app.route('/midi/<filename>/', methods=['GET'], endpoint='display_midi')
-@wrapper
-def display_midi(filename):
-    # print('display_midi: ' + filename)
-    return redirect(url_for('static', filename='midi/' + filename), code=301)
-
-
-def inference(audio_path, output_midi_path):
-    """Inference template.
-    Args:
-    model_type: str
-    audio_path: str
+@app.route('/api/transcription_status/<task_id>', methods=['GET'])
+def get_transcription_status(task_id):
     """
-    # # Arugments & parameters
-    # audio_path = args.audio_path
-    # output_midi_path = args.output_midi_path
-    # device = 'cuda' if args.cuda and torch.cuda.is_available() else 'cpu'
-    device = 'cpu'
+    API endpoint for the client to poll for the transcription status.
+    """
+    task_result = AsyncResult(task_id)
+    if task_result.state == 'PENDING':
+        response = {
+            'state': task_result.state,
+            'status': 'Pending...'
+        }
+    elif task_result.state != 'FAILURE':
+        response = {
+            'state': task_result.state,
+            'result': task_result.info,
+        }
+    else:
+        # Something went wrong in the background job
+        response = {
+            'state': task_result.state,
+            'status': str(task_result.info),  # this is the exception raised
+        }
+    return jsonify(response)
 
-    # Load audio
-    (audio, _) = load_audio(audio_path, sr=sample_rate, mono=True)
 
-    # Transcriptor
-    transcriptor = PianoTranscription(device=device, checkpoint_path=None)
-    """device: 'cuda' | 'cpu'
-        checkpoint_path: None for default path, or str for downloaded checkpoint path.
-        """
-    # Transcribe and write out to MIDI file
-    transcribe_time = time.time()
-    transcribed_dict = transcriptor.transcribe(audio, output_midi_path)
-    print('Transcribe time: {:.3f} s'.format(time.time() - transcribe_time))
+@app.route('/api/download_midi/<filename>', methods=['GET'])
+def download_midi(filename):
+    """
+    API endpoint to download the generated MIDI file.
+    """
+    midi_path = os.path.join(app.config['STORE_FOLDER'], filename)
+    if os.path.exists(midi_path):
+        from flask import send_from_directory
+        return send_from_directory(app.config['STORE_FOLDER'], filename, as_attachment=True)
+    else:
+        return jsonify({'error': 'File not found'}), 404
 
 
 if __name__ == "__main__":
-    app.run(debug=False, host='0.0.0.0', port=9075)
+    app.run(debug=True, host='0.0.0.0', port=9000)
