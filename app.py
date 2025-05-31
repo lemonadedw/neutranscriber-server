@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 app.config['UPLOAD_FOLDER'] = 'static/audio/'
 app.config['STORE_FOLDER'] = 'static/midi/'
-ALLOWED_EXTENSIONS = {'mp3'}
+ALLOWED_EXTENSIONS = {'mp3', 'wav', 'flac', 'ogg', 'm4a', 'aiff', 'aac'}
 
 # Ensure the upload and storage directories exist
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
@@ -25,7 +25,7 @@ def allowed_file(filename):
 @app.route('/api/transcribe', methods=['POST'])
 def upload_and_transcribe():
     """
-    API endpoint to upload an MP3 file and start the transcription process.
+    API endpoint to upload an audio file and start the transcription process.
     """
     if 'file' not in request.files:
         return jsonify({'error': 'No file part in the request'}), 400
@@ -82,6 +82,14 @@ def download_midi(filename):
         return send_from_directory(app.config['STORE_FOLDER'], filename, as_attachment=True)
     else:
         return jsonify({'error': 'File not found'}), 404
+
+
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    """
+    Simple health check endpoint.
+    """
+    return jsonify({'status': 'ok'}), 200
 
 
 if __name__ == "__main__":

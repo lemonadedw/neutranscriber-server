@@ -7,8 +7,8 @@ from piano_transcription_inference import PianoTranscription, sample_rate, load_
 # Configure Celery
 celery = Celery(
     'tasks',
-    broker='redis://redis:6379/0',
-    backend='redis://redis:6379/0'
+    broker='redis://localhost:6379/0',
+    backend='redis://localhost:6379/0'
 )
 
 # Define the directory for storing MIDI files
@@ -31,8 +31,10 @@ def transcribe_audio_task(audio_path):
 
         # Define the output path for the MIDI file
         filename = os.path.basename(audio_path)
+        # Remove extension and add .mid
+        filename_without_ext = os.path.splitext(filename)[0]
         output_midi_path = os.path.join(
-            os.getcwd(), STORE_FOLDER, filename.replace('.mp3', '.mid'))
+            os.getcwd(), STORE_FOLDER, f"{filename_without_ext}.mid")
 
         print(f"Output MIDI path: {output_midi_path}")
 
@@ -41,14 +43,14 @@ def transcribe_audio_task(audio_path):
         (audio, _) = load_audio(audio_path, sr=sample_rate, mono=True)
         print(f"Audio loaded successfully, shape: {audio.shape}")
 
-        # Transcriptor
-        print("Initializing transcriptor...")
-        transcriptor = PianoTranscription(device='cpu', checkpoint_path=None)
+        # Transcriber
+        print("Initializing transcriber...")
+        transcriber = PianoTranscription(device='cpu', checkpoint_path=None)
 
         # Transcribe and write out to MIDI file
         print("Starting transcription...")
         start_time = time.time()
-        transcriptor.transcribe(audio, output_midi_path)
+        transcriber.transcribe(audio, output_midi_path)
         transcription_time = time.time() - start_time
 
         print(f"Transcription completed in {transcription_time} seconds")
