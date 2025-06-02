@@ -6,7 +6,7 @@ from celery.result import AsyncResult
 from celery_worker import transcribe_audio_task
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
 app.config['UPLOAD_FOLDER'] = 'static/audio/'
 app.config['STORE_FOLDER'] = 'static/midi/'
 ALLOWED_EXTENSIONS = {'mp3', 'wav', 'flac', 'ogg', 'm4a', 'aiff', 'aac'}
@@ -29,15 +29,19 @@ def upload_and_transcribe():
     """
     if 'file' not in request.files:
         return jsonify({'error': 'No file part in the request'}), 400
+
     file = request.files['file']
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
+
     if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
+        import uuid
+        unique_id = str(uuid.uuid4())
+        filename = f"{unique_id}_{secure_filename(file.filename)}"
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
 
-        # Start the background task
+        # background transcription task by Celery
         task = transcribe_audio_task.delay(filepath)
 
         # Return the task ID to the client
@@ -51,6 +55,9 @@ def get_transcription_status(task_id):
     """
     API endpoint for the client to poll for the transcription status.
     """
+    if not task_id or not isinstance(task_id, str):
+        return jsonify({'error': 'Invalid task ID'}), 400
+
     task_result = AsyncResult(task_id)
     if task_result.state == 'PENDING':
         response = {
@@ -63,10 +70,10 @@ def get_transcription_status(task_id):
             'result': task_result.info,
         }
     else:
-        # Something went wrong in the background job
+        # FAILURE
         response = {
             'state': task_result.state,
-            'status': str(task_result.info),  # this is the exception raised
+            'status': str(task_result.info),  # the exception raised
         }
     return jsonify(response)
 
