@@ -6,8 +6,8 @@ from piano_transcription_inference import PianoTranscription, sample_rate, load_
 
 celery = Celery(
     'tasks',
-    broker='redis://redis:6379/0',
-    backend='redis://redis:6379/0'
+    broker='redis://localhost:6379/0',
+    backend='redis://localhost:6379/0'
 )
 
 # The directory for storing MIDI files
