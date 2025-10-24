@@ -1,12 +1,31 @@
-import os
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from werkzeug.utils import secure_filename
-from celery.result import AsyncResult
+# Monkey patch for eventlet (must be ABSOLUTELY first!)
 from celery_worker import transcribe_audio_task
+from celery.result import AsyncResult
+from werkzeug.utils import secure_filename
+from flask_socketio import SocketIO, emit
+from flask_cors import CORS
+from flask import Flask, request, jsonify
+import os
+import eventlet
+eventlet.monkey_patch()
+
+# Now safe to import everything else
+
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+# Use Redis as message queue for multi-worker WebSocket support
+# This allows multiple Gunicorn workers to share WebSocket connections
+socketio = SocketIO(
+    app,
+    cors_allowed_origins="*",
+    async_mode='eventlet',
+    message_queue='redis://localhost:6379/1',  # Use Redis db 1 for message queue
+    logger=False,
+    engineio_logger=False
+)
+
 app.config['UPLOAD_FOLDER'] = 'static/audio/'
 app.config['STORE_FOLDER'] = 'static/midi/'
 ALLOWED_EXTENSIONS = {'mp3', 'wav', 'flac', 'ogg', 'm4a', 'aiff', 'aac'}
@@ -99,5 +118,22 @@ def health_check():
     return jsonify({'status': 'ok'}), 200
 
 
+@socketio.on('connect')
+def handle_connect():
+    """
+    Handle WebSocket connection.
+    """
+    emit('test_connection', {'message': 'WebSocket connected successfully'})
+
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    """
+    Handle WebSocket disconnection.
+    """
+    pass
+
+
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=9000)
+    socketio.run(app, debug=True, host='0.0.0.0',
+                 port=9000, allow_unsafe_werkzeug=True)
