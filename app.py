@@ -2,7 +2,7 @@
 from celery_worker import transcribe_audio_task
 from celery.result import AsyncResult
 from werkzeug.utils import secure_filename
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room, leave_room
 from flask_cors import CORS
 from flask import Flask, request, jsonify
 import os
@@ -124,6 +124,39 @@ def handle_connect():
     Handle WebSocket connection.
     """
     emit('test_connection', {'message': 'WebSocket connected successfully'})
+
+
+@socketio.on('join_task')
+def on_join_task(data):
+    """
+    Handle client joining a task-specific room.
+    Client calls this with: socket.emit('join_task', {'task_id': task_id})
+    This ensures the client only receives updates for their specific task.
+    """
+    task_id = data.get('task_id')
+    if task_id:
+        join_room(task_id)
+        emit('message', {
+            'status': 'joined',
+            'task_id': task_id,
+            'message': f'Joined room for task {task_id}'
+        })
+
+
+@socketio.on('leave_task')
+def on_leave_task(data):
+    """
+    Handle client leaving a task-specific room.
+    Client calls this with: socket.emit('leave_task', {'task_id': task_id})
+    """
+    task_id = data.get('task_id')
+    if task_id:
+        leave_room(task_id)
+        emit('message', {
+            'status': 'left',
+            'task_id': task_id,
+            'message': f'Left room for task {task_id}'
+        })
 
 
 @socketio.on('disconnect')
