@@ -13,6 +13,7 @@ from flask_socketio import SocketIO, emit, join_room, leave_room
 from werkzeug.utils import secure_filename
 from celery.result import AsyncResult
 from celery_worker import transcribe_audio_task
+import requests
 import eventlet
 eventlet.monkey_patch()
 
@@ -405,6 +406,39 @@ def health_check():
     Simple health check endpoint.
     """
     return jsonify({'status': 'ok'}), 200
+
+
+@app.route('/api/auth/user/profile-picture', methods=['GET'])
+@jwt_required()
+def get_profile_picture():
+    """
+    Proxy endpoint to get user's profile picture
+    Avoids CORS issues with Google's CDN by proxying through backend
+    Requires: JWT authentication token
+    Returns: Profile picture image file
+    """
+    user_id = get_user_id_from_jwt()
+
+    # Get user from database
+    user = User.query.get(user_id)
+    if not user or not user.picture_url:
+        return jsonify({'error': 'Profile picture not found'}), 404
+
+    try:
+        # Fetch the image from Google's CDN
+        response = requests.get(user.picture_url, timeout=5)
+        response.raise_for_status()
+
+        # Return the image with appropriate headers
+        # Use must-revalidate to check cache on each request when user changes
+        return response.content, 200, {
+            'Content-Type': response.headers.get('Content-Type', 'image/jpeg'),
+            'Cache-Control': 'private, max-age=0, must-revalidate',
+            'ETag': f'"{user_id}"'  # ETag based on user ID
+        }
+    except Exception as e:
+        print(f"Error fetching profile picture: {e}")
+        return jsonify({'error': 'Failed to fetch profile picture'}), 500
 
 
 @socketio.on('connect')
