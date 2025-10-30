@@ -47,7 +47,6 @@ A REST API service that converts piano audio recordings into MIDI files using ad
    - `JWT_SECRET_KEY`: Secret key for JWT tokens (generate with `python -c "import secrets; print(secrets.token_urlsafe(32))"`)
    - `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`: From Google Cloud Console
    - `CELERY_BROKER_URL`: Redis URL (default: `redis://localhost:6379/0`)
-   - `FLASK_ENV`: Set to `development` or `production`
 
 ### Running the Service
 
