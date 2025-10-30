@@ -1,0 +1,325 @@
+/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/librosa/util/files.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_filename
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 633, in _upgrade_instances
+    new = upgrade_or_traverse(v)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 610, in upgrade_or_traverse
+    _upgrade_instances(obj, klass, upgrade, visited, old_to_new)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 624, in _upgrade_instances
+    container_vars = vars(container)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 633, in _upgrade_instances
+    new = upgrade_or_traverse(v)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 610, in upgrade_or_traverse
+    _upgrade_instances(obj, klass, upgrade, visited, old_to_new)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 624, in _upgrade_instances
+    container_vars = vars(container)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 633, in _upgrade_instances
+    new = upgrade_or_traverse(v)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 610, in upgrade_or_traverse
+    _upgrade_instances(obj, klass, upgrade, visited, old_to_new)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 624, in _upgrade_instances
+    container_vars = vars(container)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 633, in _upgrade_instances
+    new = upgrade_or_traverse(v)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 610, in upgrade_or_traverse
+    _upgrade_instances(obj, klass, upgrade, visited, old_to_new)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 624, in _upgrade_instances
+    container_vars = vars(container)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 633, in _upgrade_instances
+    new = upgrade_or_traverse(v)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 610, in upgrade_or_traverse
+    _upgrade_instances(obj, klass, upgrade, visited, old_to_new)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 624, in _upgrade_instances
+    container_vars = vars(container)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 633, in _upgrade_instances
+    new = upgrade_or_traverse(v)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 610, in upgrade_or_traverse
+    _upgrade_instances(obj, klass, upgrade, visited, old_to_new)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 624, in _upgrade_instances
+    container_vars = vars(container)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 633, in _upgrade_instances
+    new = upgrade_or_traverse(v)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 610, in upgrade_or_traverse
+    _upgrade_instances(obj, klass, upgrade, visited, old_to_new)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 624, in _upgrade_instances
+    container_vars = vars(container)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ~~~~~^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/flask_jwt_extended/utils.py", line 15, in <lambda>
+    current_user: Any = LocalProxy(lambda: get_current_user())
+                                           ~~~~~~~~~~~~~~~~^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/flask_jwt_extended/utils.py", line 94, in get_current_user
+    get_jwt()  # Raise an error if not in a decorated context
+    ~~~~~~~^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/flask_jwt_extended/utils.py", line 27, in get_jwt
+    decoded_jwt = g.get("_jwt_extended_jwt", None)
+                  ^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 632, in _upgrade_instances
+    for k, v in list(container_vars.items()):
+                     ^^^^^^^^^^^^^^^^^^^^
+AttributeError: '_lib_fn_wrapper' object has no attribute 'items'
+/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py:602: FutureWarning: `torch.distributed.reduce_op` is deprecated, please use `torch.distributed.ReduceOp` instead
+  if isinstance(obj, klass):
+/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py:613: FutureWarning: `torch.distributed.reduce_op` is deprecated, please use `torch.distributed.ReduceOp` instead
+  if isinstance(container, dict):
+/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py:618: FutureWarning: `torch.distributed.reduce_op` is deprecated, please use `torch.distributed.ReduceOp` instead
+  if isinstance(container, list):
+/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py:624: FutureWarning: `torch.distributed.reduce_op` is deprecated, please use `torch.distributed.ReduceOp` instead
+  container_vars = vars(container)
+/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py:528: FutureWarning: `torch.distributed.reduce_op` is deprecated, please use `torch.distributed.ReduceOp` instead
+  if isinstance(o, rlock_type):
+/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py:551: FutureWarning: `torch.distributed.reduce_op` is deprecated, please use `torch.distributed.ReduceOp` instead
+  if not isinstance(o, rlock_type):
+3 RLock(s) were not greened, to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+ * Restarting with stat
+/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/librosa/util/files.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_filename
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 633, in _upgrade_instances
+    new = upgrade_or_traverse(v)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 610, in upgrade_or_traverse
+    _upgrade_instances(obj, klass, upgrade, visited, old_to_new)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 624, in _upgrade_instances
+    container_vars = vars(container)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 633, in _upgrade_instances
+    new = upgrade_or_traverse(v)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 610, in upgrade_or_traverse
+    _upgrade_instances(obj, klass, upgrade, visited, old_to_new)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 624, in _upgrade_instances
+    container_vars = vars(container)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 633, in _upgrade_instances
+    new = upgrade_or_traverse(v)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 610, in upgrade_or_traverse
+    _upgrade_instances(obj, klass, upgrade, visited, old_to_new)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 624, in _upgrade_instances
+    container_vars = vars(container)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 633, in _upgrade_instances
+    new = upgrade_or_traverse(v)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 610, in upgrade_or_traverse
+    _upgrade_instances(obj, klass, upgrade, visited, old_to_new)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 624, in _upgrade_instances
+    container_vars = vars(container)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 633, in _upgrade_instances
+    new = upgrade_or_traverse(v)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 610, in upgrade_or_traverse
+    _upgrade_instances(obj, klass, upgrade, visited, old_to_new)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 624, in _upgrade_instances
+    container_vars = vars(container)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 633, in _upgrade_instances
+    new = upgrade_or_traverse(v)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 610, in upgrade_or_traverse
+    _upgrade_instances(obj, klass, upgrade, visited, old_to_new)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 624, in _upgrade_instances
+    container_vars = vars(container)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 633, in _upgrade_instances
+    new = upgrade_or_traverse(v)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 610, in upgrade_or_traverse
+    _upgrade_instances(obj, klass, upgrade, visited, old_to_new)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 624, in _upgrade_instances
+    container_vars = vars(container)
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 526, in _get_current_object
+    return get_name(local())
+                    ~~~~~^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/flask_jwt_extended/utils.py", line 15, in <lambda>
+    current_user: Any = LocalProxy(lambda: get_current_user())
+                                           ~~~~~~~~~~~~~~~~^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/flask_jwt_extended/utils.py", line 94, in get_current_user
+    get_jwt()  # Raise an error if not in a decorated context
+    ~~~~~~~^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/flask_jwt_extended/utils.py", line 27, in get_jwt
+    decoded_jwt = g.get("_jwt_extended_jwt", None)
+                  ^^^^^
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/werkzeug/local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.
+An exception was thrown while monkey_patching for eventlet. to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+Traceback (most recent call last):
+  File "/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py", line 632, in _upgrade_instances
+    for k, v in list(container_vars.items()):
+                     ^^^^^^^^^^^^^^^^^^^^
+AttributeError: '_lib_fn_wrapper' object has no attribute 'items'
+/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py:602: FutureWarning: `torch.distributed.reduce_op` is deprecated, please use `torch.distributed.ReduceOp` instead
+  if isinstance(obj, klass):
+/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py:613: FutureWarning: `torch.distributed.reduce_op` is deprecated, please use `torch.distributed.ReduceOp` instead
+  if isinstance(container, dict):
+/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py:618: FutureWarning: `torch.distributed.reduce_op` is deprecated, please use `torch.distributed.ReduceOp` instead
+  if isinstance(container, list):
+/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py:624: FutureWarning: `torch.distributed.reduce_op` is deprecated, please use `torch.distributed.ReduceOp` instead
+  container_vars = vars(container)
+/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py:528: FutureWarning: `torch.distributed.reduce_op` is deprecated, please use `torch.distributed.ReduceOp` instead
+  if isinstance(o, rlock_type):
+/Users/henrywang/GitHub/NeuTranscriber/.venv/lib/python3.13/site-packages/eventlet/patcher.py:551: FutureWarning: `torch.distributed.reduce_op` is deprecated, please use `torch.distributed.ReduceOp` instead
+  if not isinstance(o, rlock_type):
+3 RLock(s) were not greened, to fix this error make sure you run eventlet.monkey_patch() before importing any other modules.
+ * Debugger is active!
+ * Debugger PIN: 137-306-839

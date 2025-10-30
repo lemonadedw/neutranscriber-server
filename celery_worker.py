@@ -88,6 +88,22 @@ def emit_progress(task_id, state, data):
         traceback.print_exc()
 
 
+def _handle_task_failure(task_id, state, error_msg, retries=None):
+    """
+    Centralized handler for task failures.
+    Emits progress update and stores in dead-letter queue.
+    """
+    data = {
+        'status': 'FAILURE',
+        'error': error_msg,
+    }
+    if retries is not None:
+        data['retry_attempt'] = retries
+
+    emit_progress(task_id, state, data)
+    _store_in_dlq(task_id, error_msg)
+
+
 @celery.task(
     bind=True,
     autoretry_for=(Exception,),              # Retry on any exception
@@ -136,7 +152,6 @@ def transcribe_audio_task(self, audio_path):
             'midi_filename': os.path.basename(output_midi_path),
             'transcription_time': round(transcription_time, 2)
         }
-
         emit_progress(task_id, 'SUCCESS', result)
         return result
 
@@ -145,39 +160,21 @@ def transcribe_audio_task(self, audio_path):
         error_msg = "Transcription timed out (exceeded 55 minutes)"
         print(
             f"⏱️  Task {task_id} approaching timeout limit, cleaning up gracefully...")
-        emit_progress(task_id, 'FAILURE', {
-            'status': 'FAILURE',
-            'error': error_msg
-        })
-        # Store in DLQ for monitoring
-        _store_in_dlq(task_id, error_msg)
-        # Re-raise so Celery can retry or mark as failed
+        _handle_task_failure(task_id, 'FAILURE', error_msg)
         raise
 
     except MaxRetriesExceededError:
         # Task failed 3 times and is giving up
         error_msg = "Transcription failed after 3 retry attempts"
         print(f"❌ Task {task_id} exceeded max retries: {error_msg}")
-        emit_progress(task_id, 'FAILURE', {
-            'status': 'FAILURE',
-            'error': error_msg,
-            'retries_exhausted': True
-        })
-        # Store in DLQ for manual review/replay
-        _store_in_dlq(task_id, error_msg)
+        _handle_task_failure(task_id, 'FAILURE', error_msg)
         return {'status': 'FAILURE', 'error': error_msg}
 
     except Exception as e:
         error_msg = f"Error in transcription: {str(e)}"
         print(f"⚠️  Task {task_id} failed (will retry): {error_msg}")
         traceback.print_exc()
-        emit_progress(task_id, 'FAILURE', {
-            'status': 'FAILURE',
-            'error': error_msg,
-            'retry_attempt': self.request.retries
-        })
-        # Store in DLQ for tracking
-        _store_in_dlq(task_id, error_msg)
-
+        _handle_task_failure(task_id, 'FAILURE', error_msg,
+                             retries=self.request.retries)
         # This triggers the retry logic defined in @celery.task decorator
         raise self.retry(exc=e, countdown=2 ** self.request.retries)
