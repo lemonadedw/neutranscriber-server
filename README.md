@@ -15,6 +15,8 @@ A REST API service that converts piano audio recordings into MIDI files using ad
 
 - Python 3.8+
 - Redis server
+- PostgreSQL database
+- Google OAuth credentials (for authentication)
 - macOS, Linux, or Windows
 
 ### Installation
@@ -36,23 +38,43 @@ A REST API service that converts piano audio recordings into MIDI files using ad
    pip install -r requirements.txt
    ```
 
+4. **Configure environment variables**:
+   ```bash
+   cp .env.example .env
+   ```
+   Edit `.env` with your configuration:
+   - `DATABASE_URL`: PostgreSQL connection string
+   - `JWT_SECRET_KEY`: Secret key for JWT tokens (generate with `python -c "import secrets; print(secrets.token_urlsafe(32))"`)
+   - `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`: From Google Cloud Console
+   - `CELERY_BROKER_URL`: Redis URL (default: `redis://localhost:6379/0`)
+   - `FLASK_ENV`: Set to `development` or `production`
+
 ### Running the Service
 
-You need to start three components:
+You need to start four components:
 
-1. **Start Redis server** (in terminal 1):
+1. **Start PostgreSQL database** (or ensure it's running):
+   ```bash
+   # macOS with Homebrew
+   brew services start postgresql
+   
+   # Or run Docker container
+   docker run --name postgres -e POSTGRES_PASSWORD=password -d -p 5432:5432 postgres
+   ```
+
+2. **Start Redis server** (in terminal 1):
    ```bash
    redis-server
    ```
 
-2. **Start Celery worker** (in terminal 2):
+3. **Start Celery worker** (in terminal 2):
    ```bash
    celery -A celery_worker.celery worker --loglevel=info
    ```
    
-   Note: For local development, make sure `celery_worker.py` uses `redis://localhost:6379/0` instead of `redis://redis:6379/0`
+   Note: Ensure `CELERY_BROKER_URL` in `.env` matches your Redis configuration
 
-3. **Start Flask API server** (in terminal 3):
+4. **Start Flask API server** (in terminal 3):
    ```bash
    python app.py
    ```
@@ -99,9 +121,12 @@ For complete API documentation with examples in Python, JavaScript, and cURL, se
 
 ```
 neutranscriber-server/
-├── app.py                 # Flask web server
-├── celery_worker.py       # Background task worker
+├── app.py                 # Flask web server with authentication
+├── auth.py                # Google OAuth and JWT authentication logic
+├── celery_worker.py       # Background task worker for transcription
+├── models.py              # Database models (User, Transcription)
 ├── requirements.txt       # Python dependencies
+├── .env.example           # Environment variables template
 ├── Dockerfile            # Docker configuration
 ├── docker-compose.yml    # Multi-service Docker setup
 ├── static/
@@ -112,9 +137,12 @@ neutranscriber-server/
 
 ## Architecture
 
-- **Flask**: Web server providing REST API endpoints
+- **Flask**: Web server providing REST API endpoints with JWT authentication
+- **PostgreSQL**: Database for storing user accounts and transcription history
 - **Celery**: Asynchronous task queue for background processing
 - **Redis**: Message broker and result backend for Celery
+- **Google OAuth 2.0**: User authentication via Google accounts
+- **JWT (JSON Web Tokens)**: Token-based authentication for API requests
 - **piano_transcription_inference**: ML library for piano transcription
 
 ## Supported Audio Formats
